@@ -8,35 +8,40 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Asmi Dark Theme - Premium Consumer AI */
+    --background: 0 0% 7%; /* #121214 */
+    --background-end: 0 0% 11%; /* #1B1B1F */
+    --foreground: 0 0% 95%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 0 0% 8%;
+    --card-foreground: 0 0% 95%;
+    --card-glow: 120 100% 50% / 0.1;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 8%;
+    --popover-foreground: 0 0% 95%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Neon Green Primary */
+    --primary: 120 100% 50%; /* Neon green */
+    --primary-foreground: 0 0% 8%;
+    --primary-glow: 120 100% 50% / 0.3;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 0 0% 15%;
+    --secondary-foreground: 0 0% 90%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 0 0% 12%;
+    --muted-foreground: 0 0% 60%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 120 100% 50%;
+    --accent-foreground: 0 0% 8%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 0 0% 15%;
+    --input: 0 0% 12%;
+    --ring: 120 100% 50%;
 
-    --radius: 0.5rem;
+    --radius: 1rem;
 
     --sidebar-background: 0 0% 98%;
 
@@ -100,6 +105,41 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-gradient-to-br from-background to-[hsl(var(--background-end))] text-foreground min-h-screen;
+  }
+}
+
+@layer components {
+  /* Asmi Dashboard Components */
+  .asmi-card {
+    @apply bg-card border border-border rounded-2xl p-6 shadow-lg backdrop-blur-sm;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 0 1px hsl(var(--card-glow));
+  }
+
+  .asmi-card-hover {
+    @apply transition-all duration-300 hover:shadow-[0_8px_32px_rgba(0,0,0,0.4),0_0_20px_hsl(var(--primary-glow))];
+  }
+
+  .neon-glow {
+    @apply text-primary;
+    text-shadow: 0 0 10px hsl(var(--primary-glow));
+  }
+
+  .neon-button {
+    @apply bg-primary text-primary-foreground px-6 py-3 rounded-xl font-semibold;
+    @apply transition-all duration-300 hover:shadow-[0_0_20px_hsl(var(--primary-glow))];
+    @apply hover:scale-105 active:scale-95;
+  }
+
+  .fade-up {
+    @apply opacity-0 translate-y-4 transition-all duration-500 ease-out;
+  }
+
+  .fade-up.visible {
+    @apply opacity-100 translate-y-0;
+  }
+
+  .counter-animation {
+    @apply transition-all duration-1000 ease-out;
   }
 }
