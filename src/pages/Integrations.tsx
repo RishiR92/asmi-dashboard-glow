@@ -1,69 +1,24 @@
-import { useState } from 'react';
-import { Mail, Calendar, Users, Slack, FileText, HardDrive, Check, X } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { Zap, ExternalLink, Settings, CheckCircle2, Clock, AlertCircle, Mail, Calendar, Users, MessageSquare, FileText } from 'lucide-react';
 import { ActionButton } from '@/components/ActionButton';
-
-interface Integration {
-  id: string;
-  name: string;
-  icon: React.ComponentType<any>;
-  connected: boolean;
-  lastSync?: string;
-  comingSoon?: boolean;
-  description: string;
-}
-
-const integrations: Integration[] = [
-  {
-    id: 'gmail',
-    name: 'Gmail',
-    icon: Mail,
-    connected: true,
-    lastSync: '2 minutes ago',
-    description: 'Email management and smart responses'
-  },
-  {
-    id: 'calendar',
-    name: 'Google Calendar',
-    icon: Calendar,
-    connected: true,
-    lastSync: '5 minutes ago',
-    description: 'Meeting scheduling and preparation'
-  },
-  {
-    id: 'contacts',
-    name: 'Google Contacts',
-    icon: Users,
-    connected: false,
-    description: 'Contact management and insights'
-  },
-  {
-    id: 'slack',
-    name: 'Slack',
-    icon: Slack,
-    connected: false,
-    comingSoon: true,
-    description: 'Team communication assistance'
-  },
-  {
-    id: 'notion',
-    name: 'Notion',
-    icon: FileText,
-    connected: false,
-    comingSoon: true,
-    description: 'Knowledge base and note organization'
-  },
-  {
-    id: 'drive',
-    name: 'Google Drive',
-    icon: HardDrive,
-    connected: false,
-    comingSoon: true,
-    description: 'Document management and search'
-  }
-];
+import { StatusIndicator } from '@/components/StatusIndicator';
+import { LoadingSkeleton } from '@/components/LoadingSkeleton';
+import { integrations } from '@/lib/dummyData';
 
 export default function Integrations() {
-  const [integrationList, setIntegrationList] = useState(integrations);
+  const [isVisible, setIsVisible] = useState(false);
+  const [selectedIntegration, setSelectedIntegration] = useState<string | null>(null);
+
+  useEffect(() => {
+    setIsVisible(true);
+  }, []);
+
+  const getIcon = (iconName: string) => {
+    const icons: Record<string, any> = {
+      Mail, Calendar, Users, MessageSquare, FileText
+    };
+    return icons[iconName] || Mail;
+  };
 
   const toggleIntegration = (id: string) => {
     setIntegrationList(prev => 

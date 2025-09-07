@@ -8,40 +8,51 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Asmi Dark Theme - Premium Consumer AI */
-    --background: 0 0% 7%; /* #121214 */
-    --background-end: 0 0% 11%; /* #1B1B1F */
-    --foreground: 0 0% 95%;
+    /* Premium Asmi Dark Theme - Refined Consumer AI */
+    --background: 0 0% 6%; /* #0F0F10 */
+    --background-end: 0 0% 9%; /* #171719 */
+    --background-glass: 0 0% 8% / 0.8;
+    --foreground: 0 0% 96%;
 
-    --card: 0 0% 8%;
-    --card-foreground: 0 0% 95%;
-    --card-glow: 120 100% 50% / 0.1;
+    --card: 0 0% 7%;
+    --card-foreground: 0 0% 96%;
+    --card-glow: 150 100% 45% / 0.08;
+    --card-border: 0 0% 18%;
 
-    --popover: 0 0% 8%;
-    --popover-foreground: 0 0% 95%;
+    --popover: 0 0% 7%;
+    --popover-foreground: 0 0% 96%;
 
-    /* Neon Green Primary */
-    --primary: 120 100% 50%; /* Neon green */
-    --primary-foreground: 0 0% 8%;
-    --primary-glow: 120 100% 50% / 0.3;
+    /* Refined Green Primary - More Sophisticated */
+    --primary: 150 100% 45%; /* #00E67A - Premium green */
+    --primary-foreground: 0 0% 6%;
+    --primary-glow: 150 100% 45% / 0.25;
+    --primary-subtle: 150 100% 45% / 0.1;
 
-    --secondary: 0 0% 15%;
-    --secondary-foreground: 0 0% 90%;
+    --secondary: 0 0% 12%;
+    --secondary-foreground: 0 0% 92%;
 
-    --muted: 0 0% 12%;
-    --muted-foreground: 0 0% 60%;
+    --muted: 0 0% 10%;
+    --muted-foreground: 0 0% 65%;
 
-    --accent: 120 100% 50%;
-    --accent-foreground: 0 0% 8%;
+    --accent: 150 100% 45%;
+    --accent-foreground: 0 0% 6%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 0 0% 15%;
-    --input: 0 0% 12%;
-    --ring: 120 100% 50%;
+    --border: 0 0% 18%;
+    --input: 0 0% 10%;
+    --ring: 150 100% 45%;
 
-    --radius: 1rem;
+    /* Additional Premium Colors */
+    --success: 150 100% 45%;
+    --warning: 45 100% 60%;
+    --info: 200 100% 60%;
+    
+    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(150 100% 55%) 100%);
+    --gradient-card: linear-gradient(135deg, hsl(var(--card)) 0%, hsl(0 0% 9%) 100%);
+    
+    --radius: 1.25rem;
 
     --sidebar-background: 0 0% 98%;
 
@@ -105,34 +116,84 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-gradient-to-br from-background to-[hsl(var(--background-end))] text-foreground min-h-screen;
+    @apply bg-gradient-to-br from-background via-[hsl(var(--background-glass))] to-[hsl(var(--background-end))] text-foreground min-h-screen;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-feature-settings: 'cv11', 'ss01';
+    font-variant-ligatures: contextual;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 }
 
 @layer components {
-  /* Asmi Dashboard Components */
+  /* Premium Asmi Components */
   .asmi-card {
-    @apply bg-card border border-border rounded-2xl p-6 shadow-lg backdrop-blur-sm;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 0 1px hsl(var(--card-glow));
+    @apply relative overflow-hidden;
+    background: var(--gradient-card);
+    border: 1px solid hsl(var(--card-border));
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    backdrop-filter: blur(20px);
+    box-shadow: 
+      0 8px 32px rgba(0, 0, 0, 0.4),
+      0 2px 8px rgba(0, 0, 0, 0.2),
+      inset 0 1px 0 hsl(var(--card-glow));
+  }
+
+  .asmi-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--gradient-primary);
+    opacity: 0.3;
   }
 
   .asmi-card-hover {
-    @apply transition-all duration-300 hover:shadow-[0_8px_32px_rgba(0,0,0,0.4),0_0_20px_hsl(var(--primary-glow))];
+    @apply transition-all duration-500 ease-out;
+    @apply hover:shadow-[0_12px_48px_rgba(0,0,0,0.5),0_0_32px_hsl(var(--primary-glow))];
+    @apply hover:scale-[1.02] hover:-translate-y-1;
+  }
+
+  .asmi-card-interactive {
+    @apply cursor-pointer active:scale-[0.98] active:transition-transform active:duration-150;
   }
 
   .neon-glow {
-    @apply text-primary;
-    text-shadow: 0 0 10px hsl(var(--primary-glow));
+    @apply text-primary font-medium;
+    text-shadow: 0 0 20px hsl(var(--primary-glow)), 0 0 40px hsl(var(--primary-glow));
+    letter-spacing: -0.025em;
   }
 
   .neon-button {
-    @apply bg-primary text-primary-foreground px-6 py-3 rounded-xl font-semibold;
-    @apply transition-all duration-300 hover:shadow-[0_0_20px_hsl(var(--primary-glow))];
-    @apply hover:scale-105 active:scale-95;
+    @apply relative overflow-hidden;
+    background: var(--gradient-primary);
+    color: hsl(var(--primary-foreground));
+    padding: 0.875rem 2rem;
+    border-radius: var(--radius);
+    font-weight: 600;
+    font-size: 0.95rem;
+    letter-spacing: -0.025em;
+    border: 1px solid hsl(var(--primary));
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .neon-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 
+      0 0 30px hsl(var(--primary-glow)),
+      0 8px 25px rgba(0, 0, 0, 0.3);
+  }
+
+  .neon-button:active {
+    transform: translateY(0);
   }
 
   .fade-up {
-    @apply opacity-0 translate-y-4 transition-all duration-500 ease-out;
+    @apply opacity-0 translate-y-6;
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .fade-up.visible {
@@ -140,6 +201,75 @@ All colors MUST be HSL.
   }
 
   .counter-animation {
-    @apply transition-all duration-1000 ease-out;
+    @apply transition-all duration-1500 ease-out;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Typography Classes */
+  .asmi-heading {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1.2;
+  }
+
+  .asmi-body {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    line-height: 1.5;
+  }
+
+  .asmi-mono {
+    font-family: 'JetBrains Mono', monospace;
+    font-variant-ligatures: none;
+  }
+
+  /* Glassmorphism Effect */
+  .glass {
+    background: hsl(var(--background-glass));
+    backdrop-filter: blur(20px);
+    border: 1px solid hsl(var(--border));
+  }
+
+  /* Loading Skeletons */
+  .skeleton {
+    @apply animate-pulse bg-gradient-to-r from-muted via-muted/50 to-muted;
+    border-radius: 0.5rem;
+  }
+
+  /* Status Indicators */
+  .status-dot {
+    @apply w-2 h-2 rounded-full;
+    box-shadow: 0 0 8px currentColor;
+  }
+  
+  .status-online { @apply bg-primary text-primary; }
+  .status-away { @apply bg-warning text-warning; }
+  .status-offline { @apply bg-muted text-muted; }
+
+  /* Enhanced Animations */
+  .slide-up {
+    animation: slideUp 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .bounce-subtle {
+    animation: bounceSubtle 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes bounceSubtle {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
   }
 }
